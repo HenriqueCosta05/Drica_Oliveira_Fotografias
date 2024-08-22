@@ -11,7 +11,7 @@ const servicesArr = services.services;
     <SectionIntro title="Serviços Oferecidos" description="Ofereço uma variedade de serviços de fotografia personalizados. Estou aqui para capturar seus momentos especiais com qualidade e profissionalismo."/>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 mx-auto">
         {servicesArr.map(service => (
-            <Card key={service.id} bgColor="bg-gradient-to-br from-indigo-200 to-violet-400">
+            <Card key={service.id}>
                 <h3 class="font-black text-4xl text-center">{service.title}</h3>
                 <p class="mt-4">{service.description}</p>
             </Card>
