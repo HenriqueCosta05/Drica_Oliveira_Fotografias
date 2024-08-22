@@ -1,0 +1,18 @@
+---
+import SectionIntro from "../SectionIntro";
+import Wrapper from "../Wrapper.astro";
+import Container from "./Container.astro";
+import Testimonial from "./Testimonial";
+import testimonials from '../../data/testimonials.json'
+
+const testimonialsData = testimonials.data;
+---
+
+<Wrapper>
+    <SectionIntro title="Depoimentos" description="Confira os depoimentos dos nossos clientes, onde eles elogiam a qualidade do nosso trabalho e o atendimento excepcional. Suas experiências refletem nosso compromisso em superar expectativas e entregar resultados incríveis."/>
+    <Container>
+        {testimonialsData.map(testimonial => (
+            <Testimonial key={testimonial.id} description={testimonial.description} name={testimonial.title}/>
+        ))}
+    </Container>
+</Wrapper>
