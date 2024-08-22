@@ -1,27 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import Card from "../Card.astro";
+import Card from "../Card";
 import check from "../../assets/images/check.svg"
-const data = [
-    {
-        id: 1,
-        title: "+15 clientes satisfeitos",
-        description: "Os ensaios fotográficos estão sendo um sucesso!"
-    },
-    {
-        id: 2,
-        title: "+5 tipos de ensaios",
-        description: "Os ensaios fotográficos são pensados para diferentes contextos, visando a qualidade do serviço!",
-    },
-    {
-        id: 3,
-        title: "Preços de mercado",
-        description: "Os valores dos ensaios são minuciosamente pensados para os diferentes tipos de clientes e necessidades!"
-    }
-];
+import features from "../../data/features.json"
+
+const featuresArr = features.data
 ---
 <div class="flex justify-center items-center mt-8 lg:flex-nowrap flex-wrap">
-{data.map(feature => (
+{featuresArr.map(feature => (
     <Card key={feature.id}>
         <Image src={check} alt="check" class="m-auto h-[48px] w-[48px]"/>
         <h3 class="font-black text-4xl text-center">{feature.title}</h3>
