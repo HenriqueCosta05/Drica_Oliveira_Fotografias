@@ -1,0 +1,30 @@
+---
+import Card from "../Card";
+import SectionIntro from "../SectionIntro";
+import Wrapper from "../Wrapper.astro";
+import prices from "../../data/prices.json";
+
+const pricesData = prices.data;
+---
+
+<section id="precos">
+    <Wrapper>
+        <SectionIntro title="Preços" description="Confira os preços dos nossos serviços de fotografia. Oferecemos pacotes personalizados para atender às suas necessidades e orçamento."/>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 mx-auto">
+            {pricesData.map(price => (
+                <Card key={price.id}>
+                    <h3 class="font-black text-4xl text-center">{price.name}</h3>
+                    <p class="mt-4 text-2xl font-bold text-center">R${price.price},00</p>
+                    <ul>
+                        {price.benefits.map(feature => (
+                            <li class="flex items-center mt-4" key={feature.id}>
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <p>{feature.description}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </Card>
+            ))}
+        </div>
