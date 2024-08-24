@@ -1,12 +1,12 @@
 ---
-import Card from "../Card";
+import Card from "../Card"
 import Wrapper from "../Wrapper.astro";
 import services from '../../data/services.json'
 import SectionIntro from "../SectionIntro";
 
 const servicesArr = services.services;
 ---
-<section id="servicos">
+<section id="servicos" class="animate-fadeInRight"> 
 <Wrapper>
     <SectionIntro title="Serviços Oferecidos" description="Ofereço uma variedade de serviços de fotografia personalizados. Estou aqui para capturar seus momentos especiais com qualidade e profissionalismo."/>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 mx-auto">
@@ -19,3 +19,20 @@ const servicesArr = services.services;
     </div>
 </Wrapper>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInLeft');
+        }
+      });
+    });
+
+    const targetElement = document.querySelector('#servicos');
+    if (targetElement) {
+      observer.observe(targetElement);
+    }
+  });
+</script>

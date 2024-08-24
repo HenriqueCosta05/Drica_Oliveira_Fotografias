@@ -12,3 +12,20 @@ import AboutText from "./AboutText.astro";
         <AboutFeatures />
 </Wrapper>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInLeft');
+        }
+      });
+    });
+
+    const targetElement = document.querySelector('#sobre-mim');
+    if (targetElement) {
+      observer.observe(targetElement);
+    }
+  });
+</script>
