@@ -1,0 +1,19 @@
+---
+interface TestimonialProps {
+  description: string;
+  name: string;
+}
+
+const { description, name } = Astro.props as TestimonialProps;
+---
+
+<div class="border-2 p-6 rounded-lg max-w-lg relative">
+  <div class="rounded-lg p-6 relative">
+    <p class="text-lg mb-6">
+      {description}
+    </p>
+    <div>
+      <p class="font-bold">{name}</p>
+    </div>
+  </div>
+</div>
