@@ -1,10 +1,10 @@
 ---
 import { Carousel, Photo } from 'astro-carousel';
-import data from '../../data/gallery.json';
 import { Image } from 'astro:assets';
-import {SectionIntro, Wrapper} from '@components/index.ts';
+import SectionIntro from "../SectionIntro";
 import type { ComponentProps } from 'react';
 import data from "../../data/gallery.json";
+import Wrapper from '@components/Wrapper';
 
 const images: ComponentProps<typeof Carousel>["images"] = data.slides
 ---
@@ -31,4 +31,4 @@ const images: ComponentProps<typeof Carousel>["images"] = data.slides
           })
         }
       </ul>
-  </apper>
+  </Wrapper>
