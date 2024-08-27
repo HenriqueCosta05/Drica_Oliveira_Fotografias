@@ -7,7 +7,7 @@ import prices from "../../data/prices.json";
 const pricesData = prices.data;
 ---
 
-<section id="precos">
+<section id="precos" class="animate-fadeInLeft">
     <Wrapper>
         <SectionIntro title="Preços" description="Confira os preços dos nossos serviços de fotografia. Oferecemos pacotes personalizados para atender às suas necessidades e orçamento."/>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 mx-auto">
@@ -28,3 +28,29 @@ const pricesData = prices.data;
                 </Card>
             ))}
         </div>
+        </Wrapper>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInLeft');
+        } else {
+          entry.target.classList.remove('animate-fadeInLeft');
+        }
+      });
+    });
+
+    const targetElement = document.querySelector('#precos');
+    if (targetElement) {
+      observer.observe(targetElement);
+    }
+
+    return () => {
+      if (targetElement) {
+        observer.unobserve(targetElement);
+      }
+    };
+  });

@@ -19,6 +19,8 @@ import AboutText from "./AboutText.astro";
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-fadeInLeft');
+        } else {
+          entry.target.classList.remove('animate-fadeInLeft');
         }
       });
     });
