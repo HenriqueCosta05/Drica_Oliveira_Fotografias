@@ -7,7 +7,7 @@ export { default as Services } from "./Services/Services.astro";
 export { default as Testimonials } from "./Testimonials/Testimonials.astro";
 export { default as NavBar } from "./NavBar.tsx";
 export { default as Footer } from "./Footer.astro";
-export { default as SectionIntro } from "./SectionIntro";
+export { default as SectionIntro } from "./SectionIntro.tsx";
 export { default as Card } from "./Card.tsx";
 export { default as Wrapper } from "./Wrapper.tsx";
 export { default as Gallery} from './Gallery/Gallery.astro';

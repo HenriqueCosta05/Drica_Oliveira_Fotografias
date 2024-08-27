@@ -2,8 +2,9 @@
 import React from 'react';
 
 interface CardProps {
-  bgColor: string;
+  bgColor?: string;
   children: React.ReactNode;
+  key?: number
 }
 
 const Card: React.FC<CardProps> = ({ bgColor, children }) => {
