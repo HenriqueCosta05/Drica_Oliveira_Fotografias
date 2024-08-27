@@ -3,7 +3,7 @@ import React from 'react'
 interface SectionIntroProps {
     title: string
     description: string
-    color: string
+    color?: string
     }
 export default function SectionIntro({title, description, color}: SectionIntroProps) {
   return (
