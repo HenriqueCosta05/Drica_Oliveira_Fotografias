@@ -8,6 +8,7 @@ import Wrapper from '@components/Wrapper';
 
 const images: ComponentProps<typeof Carousel>["images"] = data.slides
 ---
+<section id="galeria" class="animate-fadeInUp">
   <Wrapper>
     <SectionIntro title="Galeria" description="Veja algumas das minhas fotos favoritas. Clique em uma imagem para ver em tamanho maior." />
       <Carousel images={images} />
@@ -32,3 +33,28 @@ const images: ComponentProps<typeof Carousel>["images"] = data.slides
         }
       </ul>
   </Wrapper>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInUp');
+        } else {
+          entry.target.classList.remove('animate-fadeInUp');
+        }
+      });
+    });
+
+    const targetElement = document.querySelector('#galeria');
+    if (targetElement) {
+      observer.observe(targetElement);
+    }
+
+    return () => {
+      if (targetElement) {
+        observer.unobserve(targetElement);
+      }
+    };
+  });
