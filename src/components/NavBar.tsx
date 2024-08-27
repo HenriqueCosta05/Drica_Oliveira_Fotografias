@@ -16,27 +16,27 @@ function NavBar() {
         {/* LG + */}
         <div className="hidden lg:block">
           <ul className="flex flex-col gap-2 my-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal">
               <a href="#sobre-mim" className="flex items-center transition-colors hover:text-gray-300">
                 Sobre mim
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal">
               <a href="#servicos" className="flex items-center transition-colors hover:text-gray-300">
                 Serviços
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal">
               <a href="#depoimentos" className="flex items-center transition-colors hover:text-gray-300">
                 Depoimentos
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal">
               <a href="#precos" className="flex items-center transition-colors hover:text-gray-300">
                 Preços
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal">
               <a href="#contato" className="flex items-center transition-colors hover:text-gray-300">
                 Contato
               </a>
@@ -48,27 +48,27 @@ function NavBar() {
           className={`overflow-hidden lg:hidden transition-max-height duration-300 ease-in-out ${isCollapsed ? 'max-h-0' : 'max-h-64'}`}
         >
           <ul className="flex flex-col gap-2 my-2 lg:mb-0 lg:mt-0">
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal text-blue-gray-900">
               <a href="#sobre-mim" className="flex items-center transition-colors hover:text-blue-500">
                 Sobre mim
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal text-blue-gray-900">
               <a href="#servicos" className="flex items-center transition-colors hover:text-blue-500">
                 Serviços
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal text-blue-gray-900">
               <a href="#depoimentos" className="flex items-center transition-colors hover:text-blue-500">
                 Depoimentos
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal text-blue-gray-900">
               <a href="#precos" className="flex items-center transition-colors hover:text-blue-500">
                 Preços
               </a>
             </li>
-            <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+            <li className="block p-1 font-sans text-sm antialiased font-semibold leading-normal text-blue-gray-900">
               <a href="#contato" className="flex items-center transition-colors hover:text-blue-500">
                 Contato
               </a>
@@ -76,7 +76,7 @@ function NavBar() {
           </ul>
         </div>
         <button
-          className="absolute top-0 right-0 mt-2 mr-2 h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
+          className="absolute top-0 right-0 mt-2 mr-2 h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-semibold uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
           type="button"
           onClick={toggleCollapse}
         >
