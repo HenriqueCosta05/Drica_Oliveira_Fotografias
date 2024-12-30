@@ -2,7 +2,7 @@
 import Wrapper from "../Wrapper"
 import services from '../../data/services.json'
 import SectionIntro from "../SectionIntro";
-import Card from "@components/Card";
+import Card from "@/components/Card";
 
 const servicesArr = services.services;
 ---
@@ -14,7 +14,7 @@ const servicesArr = services.services;
     <div class="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-center bg-fixed bg-[url('/src/assets/images/aboutMe.jpg')] opacity-75 z-0"></div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 mx-auto relative z-10">
       {servicesArr.map(service => (
-        <Card key={service.id} bgColor="transparent border-2 border-white text-white" >
+        <Card key={service.id} bgColor="bg-white" >
           <h3 class="font-black text-4xl text-center">{service.title}</h3>
           <p class="mt-4">{service.description}</p>
         </Card>
