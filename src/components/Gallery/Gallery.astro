@@ -3,7 +3,7 @@ import { Carousel, Photo } from 'astro-carousel';
 import SectionIntro from "../SectionIntro";
 import type { ComponentProps } from 'react';
 import data from "../../data/gallery.json";
-import Wrapper from '@components/Wrapper';
+import Wrapper from "../Wrapper";
 
 const images: ComponentProps<typeof Carousel>["images"] = data.slides
 ---
@@ -12,13 +12,14 @@ const images: ComponentProps<typeof Carousel>["images"] = data.slides
     <SectionIntro title="Galeria" description="Veja algumas das minhas fotos favoritas. Clique em uma imagem para ver em tamanho maior." />
       <Carousel images={images} />
       <ul
-        class="grid grid-cols-1 md:grid-cols-3 justify-center items-center gap-[8px] m-0 p-4  list-none w-full"
+        class="grid grid-cols-1 md:grid-cols-3 justify-center items-center gap-[8px] m-0 p-4 list-none w-full"
         id="carouselTargetList"
       >
         {
           images.map((img, i) => {
             return (
-              <li class="hover:cursor-pointer">
+              <li class="hover:cursor-pointer animate-fadeInUp" key={i}>
+               
                 <a
                   href={`./?image=${i}`}
                   data-carousel-index={i}

@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.dricaoliveirafotografia.com.br',
   integrations: [tailwind(), react(), sitemap({
     changefreq: 'daily',
     priority: 0.7

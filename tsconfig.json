@@ -4,16 +4,23 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"]
-    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "allowJs": true,
+    "strict": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
       }
     ]
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.astro"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.astro",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ]
 }
