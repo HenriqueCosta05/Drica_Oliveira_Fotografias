@@ -16,7 +16,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/ts-plugin": "^1.10.1",
     "@types/node": "^22.5.0",
-    "@types/typescript": "^0.4.29",
+    "@types/typescript": "^2.0.0",
     "astro": "^4.14.3",
     "astro-carousel": "^2.0.8",
     "dotenv": "^16.4.5",
