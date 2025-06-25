@@ -18,7 +18,7 @@
     "@types/node": "^22.5.0",
     "@types/typescript": "^2.0.0",
     "astro": "^5.1.2",
-    "astro-carousel": "^2.1.0",
+    "astro-carousel": "^3.0.0",
     "dotenv": "^16.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
