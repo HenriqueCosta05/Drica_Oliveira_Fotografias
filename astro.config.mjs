@@ -1,13 +1,16 @@
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
 import react from '@astrojs/react';
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.dricaoliveirafotografia.com.br',
-  integrations: [tailwind(), react(), sitemap({
+  integrations: [react(), sitemap({
     changefreq: 'daily',
     priority: 0.7
-  })]
+  })],
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });
