@@ -1,25 +1,46 @@
 ---
-import Footer from "../components/Footer.astro";
-import NavBar from "../components/NavBar";
+import { Navbar } from '../components/Navbar.tsx';
 import '../styles/tailwind.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = 'Adriana Oliveira Fotografias',
+  description = 'Serviços de fotografia profissional, incluindo ensaios, casamentos e eventos especiais.',
+} = Astro.props;
 ---
 
-<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Adriana Oliveira Fotografias</title>
-	</head>
-	<body class="flex flex-col min-h-screen">
-		<NavBar />
-		<main class="flex-grow">
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{title}</title>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <Navbar className="bg-white shadow-md" client:load>
+      <Navbar.Brand href="/" className="text-2xl font-bold text-gray-800">
+        <img src="/favicon.svg" alt="Logo" class="inline-block h-8 mr-2" />
+        Adriana Oliveira Fotografias
+      </Navbar.Brand>
+      <Navbar.Menu className="space-x-4">
+        <Navbar.Item href="/" active>Home</Navbar.Item>
+        <Navbar.Item href="/portfolio">Portfolio</Navbar.Item>
+        <Navbar.Item href="/about">About</Navbar.Item>
+        <Navbar.Item href="/contact">Contact</Navbar.Item>
+      </Navbar.Menu>
+      <Navbar.CTA cta={{ text: 'Agende uma sessão', href: '#contact' }} />
+    </Navbar>
+    <main class="flex-grow">
+      <slot />
+    </main>
+  </body>
 </html>
