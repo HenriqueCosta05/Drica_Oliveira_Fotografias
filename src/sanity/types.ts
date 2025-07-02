@@ -4,12 +4,7 @@ export type Hero = {
     hero: {
         title: string;
         description: string;
-        image: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
+        image: string;
         buttonText: string;
         buttonLink: string;
     }
@@ -43,24 +38,22 @@ export type ServiceExtended = {
             };
         };
         gallery: {
-            images: {
+            asset: {
+                _ref: string;
+                _type: string;
+            };
+        }[];
+        price: number;
+        testimonials: {
+            name: string;
+            comment: string;
+            clientImage: {
                 asset: {
                     _ref: string;
                     _type: string;
                 };
-            }[];
-            price: string;
-            testimonials: {
-                name: string;
-                comment: string;
-                image: {
-                    asset: {
-                        _ref: string;
-                        _type: string;
-                    };
-                };
-            }[];
-        }
+            };
+        }[];
     }
 }
 
@@ -68,13 +61,51 @@ export type Testimonial = {
     _id: string;
     _createdAt: string;
     testimonial: {
-        name: string;
+        clientName: string;
         comment: string;
-        image: {
+        clientImage: {
             asset: {
                 _ref: string;
                 _type: string;
             };
         };
     }
+}
+
+export type ContactInfo = {
+    _id: string;
+    _createdAt: string;
+    contactInfo: {
+        email: string;
+        phone: string;
+        address: string;
+    }
+}
+
+export type AboutInfo = {
+    _id: string;
+    _createdAt: string;
+    aboutInfo: {
+        history: string;
+        mission: string;
+        vision: string;
+        values: string[];
+        profileImage: {
+            asset: {
+                _ref: string;
+                _type: string;
+            };
+        };
+    }
+}
+
+export type GalleryImages = {
+    _id: string;
+    _createdAt: string;
+    galleryImages: {
+        asset: {
+            _ref: string;
+            _type: string;
+        };
+    }[]
 }

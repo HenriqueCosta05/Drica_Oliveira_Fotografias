@@ -22,28 +22,34 @@ type HeroCarouselProps = {
     showArrows?: boolean;
 };
 
-const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({ 
-    title, 
-    subtitle, 
-    buttonText, 
-    buttonLink = '#contact', 
+const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
+    title,
+    subtitle,
+    buttonText,
+    buttonLink = '#contact',
     backgroundImage,
     classNames = {},
-    isActive = false 
+    isActive = false
 }) => {
-    const backgroundStyle = backgroundImage 
-        ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-        : {};
+
+    console.log('HeroSection render:', {
+        title,
+        backgroundImage,
+        isActive,
+        backgroundStyle: backgroundImage ? `url(${backgroundImage})` : 'none'
+    });
 
     return (
-        <section 
-            className={`absolute inset-0 transition-opacity duration-500 ${
-                isActive ? 'opacity-100' : 'opacity-0'
-            } ${classNames.root || ''}`}
-            style={backgroundStyle}
-        >
-            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div className="relative z-10 h-full flex items-center justify-center">
+        <section
+            className={`absolute inset-0 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'
+                } ${classNames.root || ''} bg-cover bg-center bg-no-repeat`}
+            style={{
+                backgroundImage: backgroundImage ? `url("${backgroundImage}")` : undefined,
+                backgroundColor: backgroundImage ? 'transparent' : '#3b82f6',
+                minHeight: '100vh'
+            }}
+            data-background-url={backgroundImage}
+        >        <div className="relative z-10 h-full flex items-center justify-center">
                 <div className="max-w-4xl mx-auto px-4 text-center">
                     <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${classNames.title || 'text-white'}`}>
                         {title}
@@ -53,9 +59,8 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
                     </p>
                     <a
                         href={buttonLink}
-                        className={`inline-block px-8 py-4 font-medium text-lg rounded-md transition-colors duration-200 ${
-                            classNames.button || 'bg-secondary-dark text-white hover:bg-secondary'
-                        }`}
+                        className={`inline-block px-8 py-4 font-medium text-lg rounded-md transition-colors duration-200 ${classNames.button || 'bg-secondary-dark text-white hover:bg-secondary'
+                            }`}
                     >
                         {buttonText}
                     </a>
@@ -65,12 +70,12 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
     );
 };
 
-const HeroCarousel: React.FC<HeroCarouselProps> = ({ 
-    slides = [], 
-    autoPlay = true, 
+const HeroCarousel: React.FC<HeroCarouselProps> = ({
+    slides = [],
+    autoPlay = true,
     autoPlayInterval = 5000,
     showDots = true,
-    showArrows = true 
+    showArrows = true
 }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -142,11 +147,10 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                                index === currentSlide 
-                                    ? 'bg-white' 
-                                    : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-                            }`}
+                            className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentSlide
+                                ? 'bg-white'
+                                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                                }`}
                             aria-label={`Go to slide ${index + 1}`}
                         />
                     ))}

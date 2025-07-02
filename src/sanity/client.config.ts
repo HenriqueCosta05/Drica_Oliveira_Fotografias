@@ -1,11 +1,13 @@
 import imageUrlBuilder from "@sanity/image-url";
 
 export const clientConfig = {
-    projectId: process.env.VITE_PROJECT_ID || "",
-    dataset: process.env.VITE_DATASET || "production",
+    projectId: "luh7pu5f",
+    dataset: "production",
     title: "Adriana Oliveira Fotografias",
-    apiVersion: "2025-07-01", // use current UTC date - see "specifying API version"!
-    useCdn: true, // `false` if you want to ensure fresh data
+    apiVersion: "2025-07-01", 
+    useCdn: true,
 }
 
-const builder = imageUrlBuilder(clientConfig)
+const builder = imageUrlBuilder(clientConfig);
+
+export { builder };
