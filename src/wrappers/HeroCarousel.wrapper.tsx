@@ -32,7 +32,7 @@ const HeroCarouselWrapper: React.FC = () => {
             buttonLink: slide.hero.buttonLink,
             backgroundImage: slide.hero.image,
             classNames: {
-                root: `bg-cover bg-center bg-no-repeat`,
+                root: `w-9/12 m-auto h-9/12 object-contain flex items-center justify-center bg-cover bg-center`,
             },
         };
     });

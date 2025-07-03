@@ -32,21 +32,13 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
     isActive = false
 }) => {
 
-    console.log('HeroSection render:', {
-        title,
-        backgroundImage,
-        isActive,
-        backgroundStyle: backgroundImage ? `url(${backgroundImage})` : 'none'
-    });
-
     return (
         <section
             className={`absolute inset-0 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'
-                } ${classNames.root || ''} bg-cover bg-center bg-no-repeat`}
+                } ${classNames.root || ''}`}
             style={{
                 backgroundImage: backgroundImage ? `url("${backgroundImage}")` : undefined,
                 backgroundColor: backgroundImage ? 'transparent' : '#3b82f6',
-                minHeight: '100vh'
             }}
             data-background-url={backgroundImage}
         >        <div className="relative z-10 h-full flex items-center justify-center">

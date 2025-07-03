@@ -11,8 +11,8 @@ export const getHeroes = async (): Promise<Hero[]> => {
             hero {
                 title,
                 description,
-                "image": image.asset->url + "?w=600&h=600&fit=crop&crop=center&q=100&fm=webp",
-                "imageMobile": image.asset->url + "?w=1080&h=1920&fit=crop&crop=center&q=85&fm=webp",
+                "image": image.asset->url, 
+                "imageMobile": image.asset->url,
                 buttonText,
                 buttonLink
             }
