@@ -2,6 +2,7 @@ export type Hero = {
     _id: string;
     _createdAt: string;
     hero: {
+        classNames: any;
         title: string;
         description: string;
         image: string;
@@ -16,12 +17,7 @@ export type Service = {
     service: {
         title: string;
         description: string;
-        image: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
+        image: string;
     }
 }
 
@@ -31,28 +27,13 @@ export type ServiceExtended = {
     serviceExtended: {
         title: string;
         description: string;
-        image: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
-        gallery: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        }[];
+        image: string;
+        gallery: string[];
         price: number;
         testimonials: {
             name: string;
             comment: string;
-            clientImage: {
-                asset: {
-                    _ref: string;
-                    _type: string;
-                };
-            };
+            clientImage: string;
         }[];
     }
 }
@@ -63,12 +44,7 @@ export type Testimonial = {
     testimonial: {
         clientName: string;
         comment: string;
-        clientImage: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
+        clientImage: string;
     }
 }
 
@@ -89,13 +65,8 @@ export type AboutInfo = {
         history: string;
         mission: string;
         vision: string;
-        values: string[];
-        profileImage: {
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
+        values: string;
+        profileImage: string;
     }
 }
 

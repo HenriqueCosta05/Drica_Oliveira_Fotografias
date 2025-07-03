@@ -83,8 +83,8 @@ export const getContactInfo = async (): Promise<ContactInfo[]> => {
     )
 }
 
-export const getAboutInfo = async (): Promise<AboutInfo[]> => {
-    return createClient(clientConfig).fetch(
+export const getAboutInfo = async (): Promise<AboutInfo | null> => {
+    const results = await createClient(clientConfig).fetch(
         groq`*[_type == "About"] | order(_createdAt desc) {
             _id,
             _createdAt,
@@ -96,7 +96,8 @@ export const getAboutInfo = async (): Promise<AboutInfo[]> => {
                 "profileImage": profileImage.asset->url
             }
         }`
-    )
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
 }
 
 export const getGalleryImages = async (): Promise<GalleryImages[]> => {

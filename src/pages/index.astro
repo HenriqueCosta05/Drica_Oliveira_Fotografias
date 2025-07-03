@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AboutWrapper from "../wrappers/About.wrapper";
 import HeroCarouselWrapper from "../wrappers/HeroCarousel.wrapper";
 ---
 
 <Layout>
 	<HeroCarouselWrapper client:load />
+	<AboutWrapper client:load />
 </Layout>
 

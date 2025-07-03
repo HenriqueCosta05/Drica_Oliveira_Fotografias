@@ -41,9 +41,9 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
                 backgroundColor: backgroundImage ? 'transparent' : '#3b82f6',
             }}
             data-background-url={backgroundImage}
-        >        <div className="relative z-10 h-full flex items-center justify-center">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${classNames.title || 'text-white'}`}>
+        >        <div className="relative z-10 h-full flex items-center justify-start px-16">
+                <div className="max-w-4xl left px-4">
+                    <h1 className={`text-4xl md:text-6xl ml-0 font-bold mb-6 ${classNames.title || 'text-white'}`}>
                         {title}
                     </h1>
                     <p className={`text-lg md:text-xl mb-8 ${classNames.subtitle || 'text-gray-200'}`}>
