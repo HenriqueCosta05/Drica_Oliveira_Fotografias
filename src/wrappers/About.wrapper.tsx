@@ -31,16 +31,18 @@ const AboutWrapper = () => {
     }
 
     return (
-        <section className="w-full my-32 h-screen relative mx-auto px-4">
-            <div className="mx-auto">
-                <div className="flex flex-row items-center justify-between text-center">
-                    <div className="flex flex-col items-center justify-center sm:flex-wrap max-w-7xl mx-auto">
+        <section className="w-full my-40 relative px-4">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 md:gap-16">
+                    <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
                         <About.Title title="Sobre mim" />
                         <About.Description text={data?.aboutInfo.history} />
                     </div>
-                    <About.Image src={data.aboutInfo.profileImage} alt="About Us" />
+                    <div className="flex-shrink-0 mb-8 md:mb-0">
+                        <About.Image src={data.aboutInfo.profileImage} alt="Sobre mim" className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-lg shadow-lg" />
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                     <About.Feature
                         title="Missão"
                         description={data?.aboutInfo.mission || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}

@@ -39,19 +39,23 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
             style={{
                 backgroundImage: backgroundImage ? `url("${backgroundImage}")` : undefined,
                 backgroundColor: backgroundImage ? 'transparent' : '#3b82f6',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
             }}
             data-background-url={backgroundImage}
-        >        <div className="relative z-10 h-full flex items-center justify-start px-16">
-                <div className="max-w-4xl left px-4">
-                    <h1 className={`text-4xl md:text-6xl ml-0 font-bold mb-6 ${classNames.title || 'text-white'}`}>
+        >
+            <div className="relative z-10 h-full flex items-center justify-start px-4 sm:px-8 md:px-16">
+                <div className="max-w-4xl w-full">
+                    <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 ${classNames.title || 'text-white'}`}>
                         {title}
                     </h1>
-                    <p className={`text-lg md:text-xl mb-8 ${classNames.subtitle || 'text-gray-200'}`}>
+                    <p className={`text-sm sm:text-base md:text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl ${classNames.subtitle || 'text-gray-200'}`}>
                         {subtitle}
                     </p>
                     <a
                         href={buttonLink}
-                        className={`inline-block px-8 py-4 font-medium text-lg rounded-md transition-colors duration-200 ${classNames.button || 'bg-secondary-dark text-white hover:bg-secondary'
+                        className={`inline-block px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 font-medium text-sm sm:text-base md:text-lg rounded-md transition-colors duration-200 ${classNames.button || 'bg-secondary-dark text-white hover:bg-secondary'
                             }`}
                     >
                         {buttonText}
@@ -96,7 +100,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({
     if (!slides.length) return null;
 
     return (
-        <div className="relative h-screen overflow-hidden">
+        <div className="relative h-screen overflow-hidden bg-gray-900">
             {slides.map((slide, index) => (
                 <HeroSection
                     key={index}

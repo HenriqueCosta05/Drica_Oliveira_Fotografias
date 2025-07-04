@@ -1,15 +1,18 @@
 
 interface TitleProps {
     title?: string;
+    className?: string;
 }
 
 interface DescriptionProps {
     text?: string;
+    className?: string;
 }
 
 interface ImageProps {
     src?: string;
     alt?: string;
+    className?: string;
 }
 
 const Title = (Props: TitleProps) => (
@@ -59,7 +62,7 @@ const Image = (Props: ImageProps) => (
     <img
         src={Props.src || '/default-image.jpg'}
         alt={Props.alt || 'About Us'}
-        className="rounded-lg shadow-lg w-full max-w-[400px] object-cover mx-auto"
+        className={`w-32 h-32 md:w-64 md:h-64 object-cover shadow-lg ${Props.className}`}
     />
 );
 
