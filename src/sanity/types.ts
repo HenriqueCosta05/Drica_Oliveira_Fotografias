@@ -18,6 +18,7 @@ export type Service = {
         title: string;
         description: string;
         image: string;
+        serviceId: string;
     }
 }
 

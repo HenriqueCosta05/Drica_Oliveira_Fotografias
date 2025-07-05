@@ -15,7 +15,7 @@ type HeroSectionProps = {
 };
 
 type HeroCarouselProps = {
-    slides?: HeroSectionProps[];
+    slides?: any[];
     autoPlay?: boolean;
     autoPlayInterval?: number;
     showDots?: boolean;

@@ -1,0 +1,10 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ServiceExtendedWrapper from "../wrappers/ServiceExtended.tsx";
+---
+
+<Layout>
+    <div class="max-w-7xl mx-auto">
+    <ServiceExtendedWrapper serviceId={Astro.params.service} client:load />
+    </div>
+</Layout>

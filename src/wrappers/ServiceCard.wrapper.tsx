@@ -4,8 +4,8 @@ import type { Service } from "../sanity/types.ts";
 import { Card } from "../components/ServiceCard.tsx";
 
 const ServiceCardWrapper = () => {
-
     const [serviceCards, setServiceCards] = useState<Service[]>([]);
+
     useEffect(() => {
         const fetchServiceCards = async () => {
             try {
@@ -19,6 +19,14 @@ const ServiceCardWrapper = () => {
         fetchServiceCards();
     }, []);
 
+    const handleCardClick = (serviceId: string) => {
+        try {
+            window.location.href = `/${serviceId}`;
+        } catch (error) {
+            window.open(`/${serviceId}`, '_self');
+        }
+    }
+
     return (
         <section className="w-full my-40 relative px-4">
             <div className="max-w-7xl mx-auto">
@@ -30,14 +38,18 @@ const ServiceCardWrapper = () => {
                     vida. Desde casamentos e ensaios fotográficos até eventos corporativos, temos a solução perfeita para
                     você.
                 </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {serviceCards.map((card) => (
-                    <Card.Root key={card._id} className="p-4">
-                        <Card.Image src={card.service.image} alt={card.service.title} className="mb-4 rounded-md" />
-                        <Card.Title className="mb-2">{card.service.title}</Card.Title>
-                        <Card.Description>{card.service.description}</Card.Description>
-                    </Card.Root>
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {serviceCards.map((card) => (
+                        <Card.Root
+                            key={card._id}
+                            className="p-4 hover:cursor-pointer transition-transform hover:scale-105"
+                            onClick={() => handleCardClick(card.service.serviceId)}
+                        >
+                            <Card.Image src={card.service.image} alt={card.service.title} className="mb-4 rounded-md" />
+                            <Card.Title className="mb-2">{card.service.title}</Card.Title>
+                            <Card.Description>{card.service.description}</Card.Description>
+                        </Card.Root>
+                    ))}
                 </div>
             </div>
         </section>

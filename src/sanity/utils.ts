@@ -28,6 +28,7 @@ export const getServices = async (): Promise<Service[]> => {
             service {
                 title,
                 description,
+                serviceId,
                 "image": image.asset->url
             }
         }`
@@ -53,6 +54,29 @@ export const getDetailedServices = async (): Promise<ServiceExtended[]> => {
             }
         }`
     )
+}
+
+export const getServiceById = async (serviceId: string): Promise<ServiceExtended | null> => {
+    const results = await createClient(clientConfig).fetch(
+        groq`*[_type == "ServicesExtended" && serviceExtended.serviceId == $serviceId] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            serviceExtended {
+                title,
+                description,
+                "image": image.asset->url,
+                "gallery": gallery[].asset->url,
+                price,
+                testimonials[] {
+                    name,
+                    comment,
+                    "clientImage": clientImage.asset->url
+                }
+            }
+        }`,
+        { serviceId }
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
 }
 
 export const getTestimonials = async (): Promise<Testimonial[]> => {

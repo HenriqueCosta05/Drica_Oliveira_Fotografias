@@ -1,6 +1,17 @@
-export const Root = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+export const Root = ({ children, className, onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
     return (
-        <div className={`overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200 ${className || ''}`}>
+        <div
+            className={`overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200 ${className || ''}`}
+            onClick={onClick}
+            role={onClick ? "button" : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            onKeyDown={onClick ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onClick();
+                }
+            } : undefined}
+        >
             {children}
         </div>
     );
