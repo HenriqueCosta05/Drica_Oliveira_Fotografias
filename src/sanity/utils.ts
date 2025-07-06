@@ -1,7 +1,7 @@
 import { createClient } from "@sanity/client"
 import groq from "groq"
 import { clientConfig } from "./client.config.ts"
-import type { AboutInfo, ContactInfo, GalleryImages, Hero, Service, ServiceExtended, Testimonial } from "./types.ts"
+import type { AboutInfo, ContactInfo, GalleryImages, Hero, PricingPlan, Service, ServiceExtended, Testimonial } from "./types.ts"
 
 export const getHeroes = async (): Promise<Hero[]> => {
     return createClient(clientConfig).fetch(
@@ -130,6 +130,85 @@ export const getGalleryImages = async (): Promise<GalleryImages[]> => {
             _id,
             _createdAt,
             "galleryImages": galleryImages[].asset->url
+        }`
+    )
+}
+
+export const getPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing"] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`
+    )
+}
+
+export const getPricingPlansByCategory = async (category: string): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && pricingPlan.category == $category] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`,
+        { category }
+    )
+}
+
+export const getPopularPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && pricingPlan.isPopular == true] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
         }`
     )
 }

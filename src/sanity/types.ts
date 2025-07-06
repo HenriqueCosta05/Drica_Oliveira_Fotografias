@@ -81,3 +81,25 @@ export type GalleryImages = {
         };
     }[]
 }
+
+export type PricingPlan = {
+    _id: string;
+    _createdAt: string;
+    pricingPlan: {
+        title: string;
+        shortDescription: string;
+        price: number;
+        priceType: 'fixed' | 'starting_from' | 'per_hour' | 'consultation';
+        image?: string;
+        featuresIncluded: {
+            feature: string;
+            isHighlight: boolean;
+        }[];
+        category: 'wedding' | 'couples' | 'family' | 'children' | 'maternity' | 'corporate' | 'events' | 'portraits' | 'other';
+        duration?: string;
+        deliveryTime?: string;
+        specialNotes?: string;
+        isPopular: boolean;
+        displayOrder?: number;
+    }
+}
