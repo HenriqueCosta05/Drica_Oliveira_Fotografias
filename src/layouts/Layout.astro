@@ -1,15 +1,15 @@
 ---
-import { Navbar } from '../components/Navbar.tsx';
-import '../styles/tailwind.css';
+import { Navbar } from "../components/Navbar.tsx";
+import "../styles/tailwind.css";
 
 export interface Props {
   title?: string;
   description?: string;
 }
 
-const { 
-  title = 'Adriana Oliveira Fotografias',
-  description = 'Serviços de fotografia profissional, incluindo ensaios, casamentos e eventos especiais.',
+const {
+  title = "Adriana Oliveira Fotografias",
+  description = "Serviços de fotografia profissional, incluindo ensaios, casamentos e eventos especiais.",
 } = Astro.props;
 ---
 
@@ -17,7 +17,10 @@ const {
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,19 +29,37 @@ const {
     <title>{title}</title>
   </head>
   <body class="flex flex-col min-h-screen">
-    <Navbar className="bg-white shadow-md" client:load>
-      <Navbar.Brand href="/" className="text-2xl font-bold text-gray-800">
-        <img src="/favicon.svg" alt="Logo" class="inline-block h-8 mr-2" />
-        Adriana Oliveira Fotografias
+    <Navbar className="border-b border-gray-100" client:load fixed>
+      <Navbar.Brand
+        href="/"
+        className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800"
+      >
+        <img
+          src="/favicon.svg"
+          alt="Logo"
+          class="inline-block h-6 sm:h-8 lg:h-10 mr-2 sm:mr-3"
+        />
+        <span
+          class="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent"
+        >
+          Adriana Oliveira
+        </span>
+        <span
+          class="hidden sm:inline text-gray-600 font-normal text-sm sm:text-lg lg:text-xl ml-1 sm:ml-2"
+        >
+          Fotografias
+        </span>
       </Navbar.Brand>
-      <Navbar.Menu className="space-x-4">
-        <Navbar.Item href="#">Sobre</Navbar.Item>
+      <Navbar.Menu className="space-x-4 lg:space-x-6 xl:space-x-8">
+        <Navbar.Item href="#sobre">Sobre</Navbar.Item>
         <Navbar.Item href="#servicos">Serviços</Navbar.Item>
-        <Navbar.Item href="/galeria">Galeria de Fotos</Navbar.Item>
+        <Navbar.Item href="/galeria">Galeria</Navbar.Item>
+        <Navbar.Item href="#contato">Contato</Navbar.Item>
       </Navbar.Menu>
-      <Navbar.CTA cta={{ text: 'Agende um ensaio!', href: '#contact' }} />
+      <Navbar.Toggle />
+      <Navbar.CTA cta={{ text: "Agendar Ensaio", href: "#contact" }} />
     </Navbar>
-    <main class="flex-grow">
+    <main class="flex-grow pt-14 sm:pt-16 lg:pt-20">
       <slot />
     </main>
   </body>

@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { getServices } from "../sanity/utils.ts";
 import type { Service } from "../sanity/types.ts";
 import { Card } from "../components/ServiceCard.tsx";
+import { useAsyncLoading } from "../hooks/useLoading.ts";
+import { LoadingPlaceholder, ImageWithLoading } from "../components/Loading.tsx";
 
 const ServiceCardWrapper = () => {
-    const [serviceCards, setServiceCards] = useState<Service[]>([]);
+    const {
+        isLoading,
+        data: serviceCards,
+        error,
+        execute
+    } = useAsyncLoading<Service[]>({
+        onError: (error) => {
+            console.error('Error fetching service cards:', error);
+        }
+    });
 
     useEffect(() => {
-        const fetchServiceCards = async () => {
-            try {
-                const response = await getServices();
-                console.log('Fetched service cards:', response);
-                setServiceCards(response);
-            } catch (error) {
-                console.error('Error fetching service cards:', error);
-            }
-        };
-        fetchServiceCards();
-    }, []);
+        execute(() => getServices());
+    }, []); 
 
     const handleCardClick = (serviceId: string) => {
         try {
@@ -25,6 +27,61 @@ const ServiceCardWrapper = () => {
         } catch (error) {
             window.open(`/${serviceId}`, '_self');
         }
+    }
+
+    // Loading state
+    if (isLoading) {
+        return (
+            <section className="w-full my-40 relative px-4">
+                <div className="max-w-7xl mx-auto">
+                    <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-8 animate-pulse"></div>
+                    <div className="h-4 bg-gray-200 rounded w-full max-w-4xl mx-auto mb-12 animate-pulse"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <LoadingPlaceholder
+                                key={index}
+                                type="card"
+                                className="h-80"
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className="w-full my-40 relative px-4">
+                <div className="max-w-7xl mx-auto text-center">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-8">
+                        <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                        <h2 className="text-xl font-semibold text-red-700 mb-2">Erro ao carregar serviços</h2>
+                        <p className="text-red-600 mb-4">Não foi possível carregar os serviços disponíveis.</p>
+                        <button
+                            onClick={() => execute(() => getServices())}
+                            className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"
+                        >
+                            Tentar novamente
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (!serviceCards || serviceCards.length === 0) {
+        return (
+            <section className="w-full my-40 relative px-4">
+                <div className="max-w-7xl mx-auto text-center">
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-8">
+                        <div className="text-gray-400 text-4xl mb-4">🔧</div>
+                        <h2 className="text-xl font-semibold text-gray-700 mb-2">Nenhum serviço disponível</h2>
+                        <p className="text-gray-600">Não há serviços disponíveis no momento.</p>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     return (
@@ -45,7 +102,12 @@ const ServiceCardWrapper = () => {
                             className="p-4 hover:cursor-pointer transition-transform hover:scale-105"
                             onClick={() => handleCardClick(card.service.serviceId)}
                         >
-                            <Card.Image src={card.service.image} alt={card.service.title} className="mb-4 rounded-md" />
+                            <ImageWithLoading
+                                src={card.service.image}
+                                alt={card.service.title}
+                                className="mb-4 rounded-md w-full h-48 object-cover"
+                                placeholderClassName="mb-4 rounded-md w-full h-48"
+                            />
                             <Card.Title className="mb-2">{card.service.title}</Card.Title>
                             <Card.Description>{card.service.description}</Card.Description>
                         </Card.Root>
