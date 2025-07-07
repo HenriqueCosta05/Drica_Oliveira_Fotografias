@@ -1,7 +1,7 @@
 import { createClient } from "@sanity/client"
 import groq from "groq"
 import { clientConfig } from "./client.config.ts"
-import type { AboutInfo, ContactInfo, GalleryImages, Hero, PricingPlan, Service, ServiceExtended, Testimonial } from "./types.ts"
+import type { AboutInfo, ContactInfo, FormConfig, GalleryImages, Hero, PricingPlan, Service, ServiceExtended, Testimonial } from "./types.ts"
 
 export const getHeroes = async (): Promise<Hero[]> => {
     return createClient(clientConfig).fetch(
@@ -208,6 +208,249 @@ export const getPopularPricingPlans = async (): Promise<PricingPlan[]> => {
                 specialNotes,
                 isPopular,
                 displayOrder
+            }
+        }`
+    )
+}
+
+export const getAllPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing"] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`
+    )
+}
+
+export const getPricingPlanById = async (planId: string): Promise<PricingPlan | null> => {
+    const results = await createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && _id == $planId] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`,
+        { planId }
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
+}
+
+export const getForms = async (): Promise<FormConfig[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder"] | order(formConfig.isPrimary desc, _createdAt desc) {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`
+    )
+}
+
+export const getActiveforms = async (): Promise<FormConfig[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.isActive == true] | order(formConfig.isPrimary desc, _createdAt desc) {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`
+    )
+}
+
+export const getFormBySlug = async (slug: string): Promise<FormConfig | null> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.slug.current == $slug && formConfig.isActive == true][0] {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`,
+        { slug }
+    )
+}
+
+export const getPrimaryForm = async (): Promise<FormConfig | null> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.isPrimary == true && formConfig.isActive == true][0] {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
             }
         }`
     )

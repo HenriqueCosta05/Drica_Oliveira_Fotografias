@@ -168,7 +168,6 @@ export const PageLoading: React.FC<{ message?: string }> = ({
     );
 };
 
-// Image Loading Component
 export const ImageWithLoading: React.FC<{
     src: string;
     alt: string;

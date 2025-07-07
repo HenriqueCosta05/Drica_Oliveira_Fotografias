@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 
 interface UseLoadingOptions {
     initialLoading?: boolean;
@@ -133,10 +133,13 @@ export const useImagesLoading = (srcs: string[]) => {
     const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
     const [errorStates, setErrorStates] = useState<Record<string, boolean>>({});
 
-    useEffect(() => {
-        if (!srcs.length) return;
+    // Memoize the srcs array to prevent unnecessary re-renders
+    const memoizedSrcs = useMemo(() => srcs, [JSON.stringify(srcs)]);
 
-        const initialLoadingStates = srcs.reduce((acc, src) => {
+    useEffect(() => {
+        if (!memoizedSrcs.length) return;
+
+        const initialLoadingStates = memoizedSrcs.reduce((acc, src) => {
             acc[src] = true;
             return acc;
         }, {} as Record<string, boolean>);
@@ -144,7 +147,7 @@ export const useImagesLoading = (srcs: string[]) => {
         setLoadingStates(initialLoadingStates);
         setErrorStates({});
 
-        srcs.forEach(src => {
+        memoizedSrcs.forEach(src => {
             const img = new Image();
 
             img.onload = () => {
@@ -159,12 +162,12 @@ export const useImagesLoading = (srcs: string[]) => {
 
             img.src = src;
         });
-    }, [srcs]);
+    }, [memoizedSrcs]);
 
     const allLoaded = Object.values(loadingStates).every(loading => !loading);
     const hasErrors = Object.values(errorStates).some(hasError => hasError);
     const loadedCount = Object.values(loadingStates).filter(loading => !loading).length;
-    const progress = srcs.length > 0 ? (loadedCount / srcs.length) * 100 : 0;
+    const progress = memoizedSrcs.length > 0 ? (loadedCount / memoizedSrcs.length) * 100 : 0;
 
     return {
         loadingStates,
@@ -173,7 +176,7 @@ export const useImagesLoading = (srcs: string[]) => {
         hasErrors,
         progress,
         loadedCount,
-        totalCount: srcs.length
+        totalCount: memoizedSrcs.length
     };
 };
 

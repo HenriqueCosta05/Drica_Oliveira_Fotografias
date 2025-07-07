@@ -103,3 +103,50 @@ export type PricingPlan = {
         displayOrder?: number;
     }
 }
+
+export type FormField = {
+    fieldType: 'text' | 'email' | 'phone' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'file' | 'number';
+    fieldName: string;
+    label: string;
+    placeholder?: string;
+    isRequired: boolean;
+    options?: {
+        value: string;
+        label: string;
+    }[];
+    validation?: {
+        minLength?: number;
+        maxLength?: number;
+        min?: number;
+        max?: number;
+        errorMessage?: string;
+    };
+    displayOrder?: number;
+    width: 'full' | 'half' | 'third' | 'two-thirds';
+}
+
+export type FormConfig = {
+    _id: string;
+    _createdAt: string;
+    formConfig: {
+        title: string;
+        description?: string;
+        slug: {
+            current: string;
+        };
+        isActive: boolean;
+        isPrimary: boolean;
+        fields: FormField[];
+        submitSettings: {
+            buttonText: string;
+            successMessage: string;
+            recipientEmail: string;
+            emailSubject: string;
+        };
+        styling?: {
+            primaryColor?: string;
+            formStyle: 'modern' | 'classic' | 'minimal' | 'elegant';
+            backgroundImage?: string;
+        };
+    }
+}

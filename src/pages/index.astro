@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { MainFormWrapper } from "../wrappers";
 import AboutWrapper from "../wrappers/About.wrapper";
 import HeroCarouselWrapper from "../wrappers/HeroCarousel.wrapper";
 import PricingWrapper from "../wrappers/Pricing.wrapper";
@@ -13,5 +14,5 @@ import TestimonialCarouselWrapper from "../wrappers/TestimonialCarouselWrapper";
 	<CardWrapper client:load />
 	<PricingWrapper client:load />
 	<TestimonialCarouselWrapper client:load />
+	<MainFormWrapper client:load formId="contact" />
 </Layout>
-

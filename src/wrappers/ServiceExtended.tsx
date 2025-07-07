@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { ServiceExtended } from "../sanity/types.ts";
 import { getServiceById } from "../sanity/utils.ts";
 import ImageCarousel from "../components/ImageCarousel.tsx";
+import ImageGallery from "../components/Image.tsx";
 import { useAsyncLoading, useImagesLoading } from "../hooks/useLoading.ts";
 import { LoadingPlaceholder, ImageWithLoading, LoadingSpinner } from "../components/Loading.tsx";
 
@@ -10,9 +11,6 @@ interface ServiceExtendedWrapperProps {
 }
 
 const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
-    const [isCarouselOpen, setIsCarouselOpen] = useState(false);
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-
     const {
         isLoading,
         data: service,
@@ -24,7 +22,6 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
         }
     });
 
-    // Track gallery images loading
     const galleryImages = service?.serviceExtended.gallery || [];
     const {
         allLoaded: galleryLoaded,
@@ -35,20 +32,10 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
 
     useEffect(() => {
         if (serviceId) {
-            execute(() => getServiceById(serviceId));
+            execute(() => getServiceById(serviceId) as Promise<ServiceExtended>);
         }
-    }, [serviceId]); // Remove execute from dependencies to prevent infinite loop
+    }, [serviceId]); 
 
-    const handleImageClick = (index: number) => {
-        setSelectedImageIndex(index);
-        setIsCarouselOpen(true);
-    };
-
-    const handleIsCarouselOpen = () => {
-        setIsCarouselOpen(!isCarouselOpen);
-    };
-
-    // Loading state
     if (isLoading) {
         return (
             <div className="bg-white min-h-screen">
@@ -82,7 +69,6 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="bg-white min-h-screen flex items-center justify-center">
@@ -94,7 +80,7 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
                     </div>
                     <div className="space-x-4">
                         <button
-                            onClick={() => serviceId && execute(() => getServiceById(serviceId))}
+                            onClick={() => serviceId && execute(() => getServiceById(serviceId) as Promise<ServiceExtended>)}
                             className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors"
                         >
                             Tentar novamente
@@ -111,7 +97,6 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
         );
     }
 
-    // Empty/Not found state
     if (!service) {
         return (
             <div className="bg-white min-h-screen flex items-center justify-center">
@@ -134,16 +119,7 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
 
     return (
         <div>
-            {isCarouselOpen && (
-                <ImageCarousel
-                    images={service?.serviceExtended.gallery || []}
-                    onClose={handleIsCarouselOpen}
-                    isOpen={isCarouselOpen}
-                    initialIndex={selectedImageIndex}
-                />
-            )}
             <div className="bg-white min-h-screen">
-                {/* Hero Section */}
                 <div className="relative h-96 md:h-[500px] overflow-hidden my-16">
                     <ImageWithLoading
                         src={service?.serviceExtended.image || "/demo/1.png"}
@@ -153,9 +129,7 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
                     />
                 </div>
 
-                {/* Content Section */}
                 <div className="max-w-6xl mx-auto px-6 py-12">
-                    {/* Description */}
                     <div className="mb-12">
                         <h1 className="text-4xl font-bold text-contrast mb-4">
                             {service?.serviceExtended.title || "Serviço de Fotografia"}
@@ -165,10 +139,9 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
                         </p>
                     </div>
 
-                    {/* Gallery Section */}
                     <div className="mb-16">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-3xl font-bold text-contrast">Gallery</h2>
+                            <h2 className="text-3xl font-bold text-contrast">Galeria de Fotos</h2>
                             {galleryImages.length > 0 && !galleryLoaded && (
                                 <div className="flex items-center gap-2 text-sm text-gray-500">
                                     <LoadingSpinner size="sm" />
@@ -183,29 +156,10 @@ const ServiceExtendedWrapper = ({ serviceId }: ServiceExtendedWrapperProps) => {
                             )}
                         </div>
 
-                        {galleryImages.length > 0 ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                                {galleryImages.map((image, index) => (
-                                    <div
-                                        key={index}
-                                        className="aspect-square overflow-hidden rounded-lg cursor-pointer group"
-                                        onClick={() => handleImageClick(index)}
-                                    >
-                                        <ImageWithLoading
-                                            src={image}
-                                            alt={`Gallery image ${index + 1}`}
-                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 group-hover:brightness-110"
-                                            placeholderClassName="w-full h-full"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-12 bg-gray-50 rounded-lg">
-                                <div className="text-gray-400 text-4xl mb-4">📷</div>
-                                <p className="text-gray-500">Nenhuma imagem disponível na galeria.</p>
-                            </div>
-                        )}
+                        <ImageGallery
+                            images={galleryImages}
+                            className="w-full"
+                        />
                     </div>
 
                     <div>
