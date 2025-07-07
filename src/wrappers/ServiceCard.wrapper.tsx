@@ -85,7 +85,7 @@ const ServiceCardWrapper = () => {
     }
 
     return (
-        <section className="w-full my-40 relative px-4">
+        <section className="w-full my-40 relative px-4" id="servicos">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-3xl font-bold mb-8 text-center">
                     Nossos Serviços

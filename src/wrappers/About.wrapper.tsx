@@ -84,7 +84,7 @@ const AboutWrapper = () => {
     }
 
     return (
-        <section className="w-full my-40 relative px-4">
+        <section className="w-full my-40 relative px-4" id="sobre">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 md:gap-16">
                     <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">

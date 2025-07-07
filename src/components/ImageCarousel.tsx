@@ -32,7 +32,7 @@ const ImageCarousel = ({ images, isOpen, onClose, initialIndex = 0 }: ImageCarou
         };
 
         document.addEventListener('keydown', handleKeyDown);
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
@@ -56,7 +56,6 @@ const ImageCarousel = ({ images, isOpen, onClose, initialIndex = 0 }: ImageCarou
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-            {/* Close button */}
             <button
                 onClick={onClose}
                 className="absolute top-4 right-4 z-60 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all duration-200"
