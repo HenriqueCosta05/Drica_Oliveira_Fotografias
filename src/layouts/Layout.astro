@@ -27,6 +27,27 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
+    <!-- SEO: Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={Astro.site?.toString() ??
+        "https://www.dricaoliveirafotografia.com.br"}
+    />
+    <meta property="og:image" content="/favicon.svg" />
+    <!-- SEO: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/favicon.svg" />
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href={Astro.site?.toString() ??
+        "https://www.dricaoliveirafotografia.com.br"}
+    />
   </head>
   <body class="flex flex-col min-h-screen">
     <Navbar className="border-b border-gray-100" client:load fixed>

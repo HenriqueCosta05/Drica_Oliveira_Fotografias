@@ -8,7 +8,7 @@ import sanity from '@sanity/astro'
 export default defineConfig({
   site: 'https://www.dricaoliveirafotografia.com.br',
   integrations: [react(), sitemap({
-    changefreq: 'daily',
+    changefreq: 'weekly',
     priority: 0.7
   }),
     sanity({

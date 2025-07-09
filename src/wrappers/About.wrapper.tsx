@@ -3,7 +3,7 @@ import { About } from "../components/About.tsx"
 import type { AboutInfo } from "../sanity/types.ts";
 import { getAboutInfo } from "../sanity/utils.ts";
 import { useAsyncLoading } from "../hooks/useLoading.ts";
-import { LoadingSkeleton, LoadingSpinner, ImageWithLoading } from "../components/Loading.tsx";
+import { LoadingSkeleton, ImageWithLoading } from "../components/Loading.tsx";
 
 const AboutWrapper = () => {
     const {
@@ -18,10 +18,13 @@ const AboutWrapper = () => {
     });
 
     useEffect(() => {
-        execute(() => getAboutInfo());
+        execute(async () => {
+            const result = await getAboutInfo();
+            if (!result) throw new Error("No about info found");
+            return result;
+        });
     }, []); 
 
-    // Loading state
     if (isLoading) {
         return (
             <section className="w-full my-40 relative px-4">
@@ -48,7 +51,6 @@ const AboutWrapper = () => {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <section className="w-full my-40 relative px-4">
@@ -58,7 +60,11 @@ const AboutWrapper = () => {
                         <h2 className="text-xl font-semibold text-red-700 mb-2">Erro ao carregar informações</h2>
                         <p className="text-red-600 mb-4">Não foi possível carregar as informações sobre nós.</p>
                         <button
-                            onClick={() => execute(() => getAboutInfo())}
+                            onClick={() => execute(async () => {
+                                const result = await getAboutInfo();
+                                if (!result) throw new Error("No about info found");
+                                return result;
+                            })}
                             className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"
                         >
                             Tentar novamente
