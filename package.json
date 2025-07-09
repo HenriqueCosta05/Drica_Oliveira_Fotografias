@@ -17,6 +17,7 @@
     "@astrojs/vercel": "^8.2.0",
     "@sanity/astro": "^3.2.6",
     "@sanity/client": "^6.29.1",
+    "@sanity/form-toolkit": "^2.2.1",
     "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^24.0.8",
     "@types/react": "^19.1.8",

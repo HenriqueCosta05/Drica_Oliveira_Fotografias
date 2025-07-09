@@ -26,7 +26,7 @@ const HeroSection: React.FC<HeroSectionProps & { isActive?: boolean }> = ({
     title,
     subtitle,
     buttonText,
-    buttonLink = '#contact',
+    buttonLink = '/#contato',
     backgroundImage,
     classNames = {},
     isActive = false

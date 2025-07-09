@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAsyncLoading } from "../hooks/useLoading.ts";
-import { LoadingPlaceholder, LoadingSpinner } from "../components/Loading.tsx";
 import Form from "../components/Form.tsx";
-import { getFormBySlug } from "../sanity/utils.ts";
-import type { FormConfig, FormField } from "../sanity/types.ts";
+import { getFormBySlug, getServiceById } from "../sanity/utils.ts";
+import type { FormConfig, FormField, ServiceExtended } from "../sanity/types.ts";
 
-interface MainFormWrapperProps {
+interface ServiceFormWrapperProps {
     formId: string;
+    serviceId?: string;
     className?: string;
     showTitle?: boolean;
     showDescription?: boolean;
@@ -18,8 +18,9 @@ interface MainFormWrapperProps {
     };
 }
 
-const MainFormWrapper = ({
+const ServiceFormWrapper = ({
     formId,
+    serviceId,
     className = "",
     showTitle = true,
     showDescription = true,
@@ -29,23 +30,40 @@ const MainFormWrapper = ({
         email: "contato@aofotografia.com",
         hours: "Seg - Sex: 9h às 18h"
     }
-}: MainFormWrapperProps) => {
+}: ServiceFormWrapperProps) => {
     const {
-        isLoading,
+        isLoading: isLoadingForm,
         data: formConfig,
-        error,
-        execute
+        error: formError,
+        execute: executeFormFetch
     } = useAsyncLoading<FormConfig>({
         onError: (error) => {
             console.error('Error fetching form config:', error);
         }
     });
 
+    const {
+        isLoading: isLoadingService,
+        data: serviceData,
+        error: serviceError,
+        execute: executeServiceFetch
+    } = useAsyncLoading<ServiceExtended | null>({
+        onError: (error) => {
+            console.error('Error fetching service data:', error);
+        }
+    });
+
     useEffect(() => {
         if (formId) {
-            execute(() => getFormBySlug(formId) as Promise<FormConfig>);
+            executeFormFetch(() => getFormBySlug(formId) as Promise<FormConfig>);
         }
     }, [formId]);
+
+    useEffect(() => {
+        if (serviceId) {
+            executeServiceFetch(() => getServiceById(serviceId));
+        }
+    }, [serviceId]);
 
     const getFieldType = (fieldType: FormField['fieldType']): 'text' | 'email' | 'tel' | 'password' | 'url' => {
         switch (fieldType) {
@@ -107,6 +125,16 @@ const MainFormWrapper = ({
             default:
                 return 'w-full';
         }
+    };
+
+    const isLoading = isLoadingForm || isLoadingService;
+    const error = formError || serviceError;
+
+    const getEmailSubject = () => {
+        if (serviceData?.serviceExtended?.title) {
+            return `Nova prospecção - ${serviceData.serviceExtended.title} - Adriana Oliveira Fotografia`;
+        }
+        return `Nova prospecção - Adriana Oliveira Fotografia (${formConfig?.formConfig.title || 'Geral'})`;
     };
 
     if (isLoading) {
@@ -191,7 +219,10 @@ const MainFormWrapper = ({
                                         </p>
                                     </div>
                                     <button
-                                        onClick={() => formId && execute(() => getFormBySlug(formId) as Promise<FormConfig>)}
+                                        onClick={() => {
+                                            if (formId) executeFormFetch(() => getFormBySlug(formId) as Promise<FormConfig>);
+                                            if (serviceId) executeServiceFetch(() => getServiceById(serviceId));
+                                        }}
                                         className="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
                                     >
                                         Tentar novamente
@@ -242,19 +273,32 @@ const MainFormWrapper = ({
                                     <div className="text-center space-y-4 mb-8">
                                         {showTitle && (
                                             <h3 className="text-2xl md:text-3xl font-bold text-contrast">
-                                                {formConfig.formConfig.title}
+                                                {serviceData?.serviceExtended?.title
+                                                    ? `${formConfig.formConfig.title}`
+                                                    : formConfig.formConfig.title
+                                                }
                                             </h3>
                                         )}
-                                        {showDescription && formConfig.formConfig.description && (
-                                            <p className="text-gray-600">
-                                                {formConfig.formConfig.description}
-                                            </p>
+                                        {showDescription && (
+                                            <div className="space-y-2">
+                                                {formConfig.formConfig.description && (
+                                                    <p className="text-gray-600">
+                                                        {formConfig.formConfig.description}
+                                                    </p>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
                                 )}
+
                                 <Form className="space-y-6" action="https://formsubmit.co/ajax/henrique.costa.freela@gmail.com" method="POST">
-                                    <input type="hidden" name="_subject" value={`Novo contato - Adriana Oliveira Fotografias (Geral)`} />
+                                    {/* Hidden formsubmit.co configuration fields */}
+                                    <input type="hidden" name="_subject" value={getEmailSubject()} />
                                     <input type="hidden" name="_captcha" value="false" />
+                                    {serviceData && (
+                                        <input type="hidden" name="servico_solicitado" value={serviceData.serviceExtended.title} />
+                                    )}
+
                                     <Form.Feedback
                                         className="mb-6"
                                         successMessage="Formulário enviado com sucesso! Entraremos em contato em breve."
@@ -345,4 +389,4 @@ const MainFormWrapper = ({
     );
 };
 
-export default MainFormWrapper;
+export default ServiceFormWrapper;

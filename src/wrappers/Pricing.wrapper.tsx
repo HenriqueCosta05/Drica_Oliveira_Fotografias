@@ -115,7 +115,7 @@ const PricingWrapper = () => {
                                 />
                                 <PricingTable.Button
                                     variant={planData.isPopular ? "primary" : "secondary"}
-                                    href="#contact"
+                                    href="/#contato"
                                 >
                                     Agendar Sessão
                                 </PricingTable.Button>
@@ -158,7 +158,7 @@ const PricingWrapper = () => {
                         Entre em contato conosco para criar um pacote personalizado
                     </p>
                     <a
-                        href="#contact"
+                        href="/#contato"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105"
                     >
                         Solicitar Orçamento Personalizado
