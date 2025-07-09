@@ -14,7 +14,7 @@
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.1",
     "@astrojs/ts-plugin": "^1.10.4",
-    "@astrojs/vercel": "^8.2.0",
+    "@astrojs/vercel": "^8.2.1",
     "@sanity/astro": "^3.2.6",
     "@sanity/client": "^6.29.1",
     "@sanity/form-toolkit": "^2.2.1",
