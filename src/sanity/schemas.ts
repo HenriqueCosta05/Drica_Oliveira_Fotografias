@@ -250,3 +250,13 @@ export const Gallery = {
         }
     ]
 }
+
+export default [
+    Heroes,
+    ServicesCard,
+    ServicesExtended,
+    Testimonials,
+    Contact,
+    About,
+    Gallery
+] as const;
