@@ -1,16 +1,18 @@
 ---
-import {Banner, About, Services, Ad, Testimonials, Prices, Contact, Gallery} from "../components";
 import Layout from "../layouts/Layout.astro";
+import { MainFormWrapper } from "../wrappers";
+import AboutWrapper from "../wrappers/About.wrapper";
+import HeroCarouselWrapper from "../wrappers/HeroCarousel.wrapper";
+import PricingWrapper from "../wrappers/Pricing.wrapper";
+import CardWrapper from "../wrappers/ServiceCard.wrapper";
+import TestimonialCarouselWrapper from "../wrappers/TestimonialCarouselWrapper";
 ---
 
-<Layout>
-	<Banner/>
-	<About/>
-	<Services/>
-	<Ad/>
-	<Gallery/>
-	<Testimonials/>
-	<Prices/>
-	<Contact/>
+<Layout title="Adriana Oliveira Fotografias - Fotografia Profissional" description="Capturando momentos especiais com paixão e profissionalismo.">
+	<HeroCarouselWrapper client:load />
+	<AboutWrapper client:load />
+	<CardWrapper client:load />
+	<PricingWrapper client:load />
+	<TestimonialCarouselWrapper client:load />
+	<MainFormWrapper client:load formId="contact" />
 </Layout>
-

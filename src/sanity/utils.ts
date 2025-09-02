@@ -1,0 +1,457 @@
+import { createClient } from "@sanity/client"
+import groq from "groq"
+import { clientConfig } from "./client.config.ts"
+import type { AboutInfo, ContactInfo, FormConfig, GalleryImages, Hero, PricingPlan, Service, ServiceExtended, Testimonial } from "./types.ts"
+
+export const getHeroes = async (): Promise<Hero[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Banners"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            hero {
+                title,
+                description,
+                "image": image.asset->url, 
+                "imageMobile": image.asset->url,
+                buttonText,
+                buttonLink
+            }
+        }`
+    )
+}
+
+export const getServices = async (): Promise<Service[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Services"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            service {
+                title,
+                description,
+                serviceId,
+                "image": image.asset->url
+            }
+        }`
+    )
+}
+
+export const getDetailedServices = async (): Promise<ServiceExtended[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "ServicesExtended"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            serviceExtended {
+                title,
+                description,
+                "image": image.asset->url,
+                "gallery": gallery[].asset->url,
+                price,
+                testimonials[] {
+                    name,
+                    comment,
+                    "clientImage": clientImage.asset->url
+                }
+            }
+        }`
+    )
+}
+
+export const getServiceById = async (serviceId: string): Promise<ServiceExtended | null> => {
+    const results = await createClient(clientConfig).fetch(
+        groq`*[_type == "ServicesExtended" && serviceExtended.serviceId == $serviceId] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            serviceExtended {
+                title,
+                description,
+                "image": image.asset->url,
+                "gallery": gallery[].asset->url,
+                price,
+                testimonials[] {
+                    name,
+                    comment,
+                    "clientImage": clientImage.asset->url
+                }
+            }
+        }`,
+        { serviceId }
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
+}
+
+export const getTestimonials = async (): Promise<Testimonial[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Testimonials"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            testimonial {
+                clientName,
+                comment,
+                "clientImage": clientImage.asset->url
+            }
+        }`
+    )
+}
+
+export const getContactInfo = async (): Promise<ContactInfo[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Contact"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            contactInfo {
+                email,
+                phone,
+                address
+            }
+        }`
+    )
+}
+
+export const getAboutInfo = async (): Promise<AboutInfo | null> => {
+    const results = await createClient(clientConfig).fetch(
+        groq`*[_type == "About"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            aboutInfo {
+                history,
+                mission,
+                vision,
+                values,
+                "profileImage": profileImage.asset->url
+            }
+        }`
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
+}
+
+export const getGalleryImages = async (): Promise<GalleryImages[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Gallery"] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            "galleryImages": galleryImages[].asset->url
+        }`
+    )
+}
+
+export const getPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing"] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`
+    )
+}
+
+export const getPricingPlansByCategory = async (category: string): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && pricingPlan.category == $category] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`,
+        { category }
+    )
+}
+
+export const getPopularPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && pricingPlan.isPopular == true] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`
+    )
+}
+
+export const getAllPricingPlans = async (): Promise<PricingPlan[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing"] | order(pricingPlan.displayOrder asc, _createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`
+    )
+}
+
+export const getPricingPlanById = async (planId: string): Promise<PricingPlan | null> => {
+    const results = await createClient(clientConfig).fetch(
+        groq`*[_type == "Pricing" && _id == $planId] | order(_createdAt desc) {
+            _id,
+            _createdAt,
+            pricingPlan {
+                title,
+                shortDescription,
+                price,
+                priceType,
+                "image": image.asset->url,
+                featuresIncluded[] {
+                    feature,
+                    isHighlight
+                },
+                category,
+                duration,
+                deliveryTime,
+                specialNotes,
+                isPopular,
+                displayOrder
+            }
+        }`,
+        { planId }
+    );
+    return Array.isArray(results) && results.length > 0 ? results[0] : null;
+}
+
+export const getForms = async (): Promise<FormConfig[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder"] | order(formConfig.isPrimary desc, _createdAt desc) {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`
+    )
+}
+
+export const getActiveforms = async (): Promise<FormConfig[]> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.isActive == true] | order(formConfig.isPrimary desc, _createdAt desc) {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`
+    )
+}
+
+export const getFormBySlug = async (slug: string): Promise<FormConfig | null> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.slug.current == $slug && formConfig.isActive == true][0] {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`,
+        { slug }
+    )
+}
+
+export const getPrimaryForm = async (): Promise<FormConfig | null> => {
+    return createClient(clientConfig).fetch(
+        groq`*[_type == "FormBuilder" && formConfig.isPrimary == true && formConfig.isActive == true][0] {
+            _id,
+            _createdAt,
+            formConfig {
+                title,
+                description,
+                slug,
+                isActive,
+                isPrimary,
+                fields[] {
+                    fieldType,
+                    fieldName,
+                    label,
+                    placeholder,
+                    isRequired,
+                    options[] {
+                        value,
+                        label
+                    },
+                    validation {
+                        minLength,
+                        maxLength,
+                        min,
+                        max,
+                        errorMessage
+                    },
+                    displayOrder,
+                    width
+                } | order(displayOrder asc),
+                submitSettings {
+                    buttonText,
+                    successMessage,
+                    recipientEmail,
+                    emailSubject
+                },
+                styling {
+                    primaryColor,
+                    formStyle,
+                    "backgroundImage": backgroundImage.asset->url
+                }
+            }
+        }`
+    )
+}

@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ServiceExtendedWrapper from "../wrappers/ServiceExtended.tsx";
+import ServiceFormWrapper from "../wrappers/ServiceForm.wrapper";
+---
+
+<Layout title={`Adriana Oliveira Fotografias - ${Astro.params.service}`} description="Serviços de fotografia profissional, incluindo ensaios, casamentos e eventos especiais.">
+    <div class="max-w-7xl mx-auto">
+        <ServiceExtendedWrapper serviceId={Astro.params.service} client:load />
+        <ServiceFormWrapper
+            formId={Astro.params.service || ""}
+            serviceId={Astro.params.service || ""}
+            client:load
+        />
+    </div>
+</Layout>
