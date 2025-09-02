@@ -291,7 +291,7 @@ const ServiceFormWrapper = ({
                                     </div>
                                 )}
 
-                                <Form className="space-y-6" action="https://formsubmit.co/ajax/henrique.costa.freela@gmail.com" method="POST">
+                                <Form className="space-y-6" action="https://formsubmit.co/ajax/dricacristina2@yahoo.com.br" method="POST">
                                     {/* Hidden formsubmit.co configuration fields */}
                                     <input type="hidden" name="_subject" value={getEmailSubject()} />
                                     <input type="hidden" name="_captcha" value="false" />
