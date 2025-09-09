@@ -26,9 +26,7 @@ const ServiceFormWrapper = ({
     showDescription = true,
     showContactInfo = true,
     contactInfo = {
-        phone: "+55 (11) 99999-9999",
-        email: "contato@aofotografia.com",
-        hours: "Seg - Sex: 9h às 18h"
+        email: "dricacristina2@yahoo.com.br",
     }
 }: ServiceFormWrapperProps) => {
     const {
@@ -353,15 +351,6 @@ const ServiceFormWrapper = ({
 
                 {showContactInfo && (
                     <div className="grid md:grid-cols-3 gap-6 mt-16">
-                        <div className="text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 hover:shadow-lg transition-all duration-300">
-                            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-4">
-                                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-contrast mb-2">Telefone</h3>
-                            <p className="text-gray-600">{contactInfo.phone}</p>
-                        </div>
 
                         <div className="text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 hover:shadow-lg transition-all duration-300">
                             <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-4">
@@ -371,16 +360,6 @@ const ServiceFormWrapper = ({
                             </div>
                             <h3 className="font-semibold text-contrast mb-2">Email</h3>
                             <p className="text-gray-600">{contactInfo.email}</p>
-                        </div>
-
-                        <div className="text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 hover:shadow-lg transition-all duration-300">
-                            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-4">
-                                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-contrast mb-2">Horário</h3>
-                            <p className="text-gray-600">{contactInfo.hours}</p>
                         </div>
                     </div>
                 )}

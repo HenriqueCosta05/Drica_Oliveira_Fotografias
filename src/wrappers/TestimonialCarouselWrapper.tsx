@@ -8,7 +8,6 @@ const TestimonialCarouselWrapper = () => {
     useEffect(() => {
         const fetchTestimonials = async () => {
             const response = await getTestimonials();
-            console.log("Testimonials fetched:", response);
             const data: TestimonialData[] = response.map((item) => ({
                 id: item._id,
                 name: item.testimonial.clientName,
